@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  leximpact_server:
+    build: ./leximpact-server/
+    networks:
+      - leximpact_net
+    ports:
+    - published: 5000
+      target: 5000
+    depends_on:
+      - postgres
+
+  leximpact_client:
+    build: ./leximpact-client/
+    networks:
+      - leximpact_net
+    ports:
+    - published: 9001
+      target: 9001
+    depends_on:
+      - leximpact_server
+
+  postgres:
+    container_name: postgres
+    environment:
+      HOSTNAME: postgres
+      POSTGRES_DB: leximpact
+      POSTGRES_PASSWORD: 1234leximpact
+      POSTGRES_USER: leximpact
+    image: postgres:latest
+    networks:
+      - leximpact_net
+    ports:
+    - published: 5432
+      target: 5432
+    #restart: unless-stopped
+    volumes:
+    - postgres_data:/var/lib/postgresql/data:rw
+
+volumes:
+  postgres_data:
+    name: postgres_leximpact_data
+
+networks:
+  leximpact_net:
+    name: leximpact_network
