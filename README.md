@@ -10,7 +10,7 @@ Just run :
 docker-compose up
 ```
 
-And go to http://localhost:8079 to use LexImpact locally.
+And go to http://localhost:9001 to use LexImpact locally.
 
 Images used :
  - Alpine Node 12
